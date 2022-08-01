@@ -98,7 +98,7 @@ LinkedList.prototype.remove = function (ele) {
 // 元素所在的位置
 LinkedList.prototype.indexOf = function (ele) {
   let current = this.head;
-  let index = -1;
+  let index = 0;
   while (current) {
     if (current.item == ele) {
       return index

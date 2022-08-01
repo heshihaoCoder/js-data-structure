@@ -28,6 +28,6 @@ HashTable.prototype.remove = function (key) {
   this.table[LoseLoseHashCode(key)] = undefined
 }
 
-let hash = new HashTable()
-hash.put('heshihao', 99)
+
+
 

@@ -3,6 +3,15 @@ function HashTable() {
   this.table = []
 }
 
+var LoseLoseHashCode = function (key) {
+  // 根据这个key字符的ascii码的和得到一个数字
+  var hash = 0;
+  for (let i = 0; i < key.length; i++) {
+    hash += key.charCodeAt(i)
+  }
+  return hash % 37
+}
+
 let ValuePair = function (key, value) {
   this.key = key
   this.value = value

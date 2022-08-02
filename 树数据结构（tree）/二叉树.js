@@ -58,10 +58,47 @@ let preOrderTraverseNode = function (node, callback) {
 let postOrderTraverseNode = function (node, callback) {
   if (node != null) {
     postOrderTraverseNode(node.left, callback)
-    postOrderTraverseNode(node.left, callback)
+    postOrderTraverseNode(node.right, callback)
     callback(node.key)
   }
 }
+
+// 最小的键值辅助函数
+let minNode = function (node) {
+  if (node) {
+    while (node != null && node.left != null) {
+      minNode(node.left)
+    }
+    return node.key
+  }
+  return null
+}
+
+// 最大的键值辅助函数
+let maxNode = function (node) {
+  if (node) {
+    while (node != null && node.right != null) {
+      minNode(node.right)
+    }
+    return node.key
+  }
+  return null
+}
+
+// search辅助函数
+let searchNode = function (node, key) {
+  if (node.key === null) {
+    return false
+  }
+  if (node.key > key) {
+    return searchNode(node.left, key)
+  } else if (node.key < key) {
+    return searchNode(node.right, key)
+  } else {
+    return true
+  }
+}
+
 
 
 // 插入一个键
@@ -76,32 +113,32 @@ BinarySearchTree.prototype.insert = function (key) {
 
 // 查找一个键
 BinarySearchTree.prototype.search = function (key) {
-
+  return searchNode(this.root, key)
 }
 
-// 中序遍历所有节点 也就是以从最小到最大的顺序访问所有节点
+// 中序遍历所有节点 也就是以从最小到最大的顺序访问所有节点     34567
 BinarySearchTree.prototype.inOrderTraverse = function (callback) {
   inOrderTraverseNode(this.root, callback)
 }
 
-// 先序遍历所有节点   先序遍历会先访问节点本身，然后再访问它的左侧子节点，最后是右侧子节点
+// 先序遍历所有节点   先序遍历会先访问节点本身，然后再访问它的左侧子节点，最后是右侧子节点  54367
 BinarySearchTree.prototype.preOrderTraverse = function (callback) {
   preOrderTraverseNode(this.root, callback)
 }
 
-// 后序遍历所有节点  后序遍历则是先访问节点的后代节点，再访问节点本身
+// 后序遍历所有节点  后序遍历则是先访问节点的后代节点，再访问节点本身   34765
 BinarySearchTree.prototype.postOrderTraverse = function (callback) {
   postOrderTraverseNode(this.root, callback)
 }
 
 // 返回树中最小的键值
 BinarySearchTree.prototype.min = function () {
-
+  return minNode(this.root)
 }
 
 // 返回树中最大的键值
 BinarySearchTree.prototype.max = function () {
-
+  return maxNode(this.root)
 }
 
 // 从树中移除某个键
@@ -115,5 +152,5 @@ cc.insert(4)
 cc.insert(6)
 cc.insert(7)
 cc.insert(3)
-console.log(cc)
 cc.inOrderTraverse(print)
+console.log(cc)

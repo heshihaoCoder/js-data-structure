@@ -30,8 +30,21 @@ let insertNode = function (node, newNode) {
       insertNode(node.right, newNode)
     }
   }
-
 }
+
+// inOrderTraverseNode辅助函数
+let inOrderTraverseNode = function (node, callback) {
+  if (node != null) {
+    inOrderTraverseNode(node.left, callback)
+    callback(node.key)
+    inOrderTraverseNode(node.right, callback)
+  }
+}
+// inOrderTraverseNode辅助函数需要的callback
+function print(value) {
+  console.log(value)
+}
+
 
 // 插入一个键
 BinarySearchTree.prototype.insert = function (key) {
@@ -48,9 +61,9 @@ BinarySearchTree.prototype.search = function (key) {
 
 }
 
-// 中序遍历所有节点
-BinarySearchTree.prototype.inOrderTraverse = function () {
-
+// 中序遍历所有节点 也就是以从最小到最大的顺序访问所有节点
+BinarySearchTree.prototype.inOrderTraverse = function (callback) {
+  inOrderTraverseNode(this.root, callback)
 }
 
 // 先序遍历所有节点
@@ -78,21 +91,11 @@ BinarySearchTree.prototype.remove = function (key) {
 
 }
 
-let tree = new BinarySearchTree()
-
-
-tree.insert(7);
-tree.insert(6);
-tree.insert(5);
-
-tree.insert(4);
-tree.insert(3);
-
-tree.insert(2);
-tree.insert(1);
-tree.insert(72);
-tree.insert(73);
-
-tree.insert(74);
-tree.insert(75);
-console.log(tree)
+let cc = new BinarySearchTree()
+cc.insert(5)
+cc.insert(4)
+cc.insert(6)
+cc.insert(7)
+cc.insert(3)
+console.log(cc)
+cc.inOrderTraverse(print)

@@ -99,6 +99,46 @@ let searchNode = function (node, key) {
   }
 }
 
+// remove辅助函数
+let removeNode = function (node, key) {
+  if (node == null) {
+    return null
+  }
+  if (node.key > key) {
+    node.left = removeNode(node.left, key)
+    return node
+  } else if (node.key > key) {
+    node.right = removeNode(node.right, key)
+    return node
+  } else {
+    // 只有一个根节点
+    if (node.left == null && node.right == null) {
+      node = null
+      return node
+    }
+    // 只有一个子节点
+    if (node.left == null) {
+      node = node.right
+      return node
+    } else if (node.right == null) {
+      node = node.left
+      return node
+    }
+    // 一个有两个子节点的节点
+    let aux = findMinNode(node.right)
+    node.key = aux.key
+    node.right = removeNode(node.right, aux.key)
+    return node
+  }
+
+}
+let findMinNode = function (node) {
+  while (node && node.left !== null) {
+    node = node.left;
+  }
+  return node;
+};
+
 
 
 // 插入一个键
@@ -143,7 +183,7 @@ BinarySearchTree.prototype.max = function () {
 
 // 从树中移除某个键
 BinarySearchTree.prototype.remove = function (key) {
-
+  this.root = removeNode(this.root, key)
 }
 
 let cc = new BinarySearchTree()
@@ -152,5 +192,5 @@ cc.insert(4)
 cc.insert(6)
 cc.insert(7)
 cc.insert(3)
-cc.inOrderTraverse(print)
+cc.postOrderTraverse(print)
 console.log(cc)

@@ -45,6 +45,14 @@ function print(value) {
   console.log(value)
 }
 
+let preOrderTraverseNode = function (node, callback) {
+  if (node != null) {
+    callback(node)
+    preOrderTraverseNode(node.left, callback)
+    preOrderTraverseNode(node.right, callback)
+  }
+}
+
 
 // 插入一个键
 BinarySearchTree.prototype.insert = function (key) {
@@ -66,9 +74,9 @@ BinarySearchTree.prototype.inOrderTraverse = function (callback) {
   inOrderTraverseNode(this.root, callback)
 }
 
-// 先序遍历所有节点
-BinarySearchTree.prototype.preOrderTraverse = function () {
-
+// 先序遍历所有节点   先序遍历会先访问节点本身，然后再访问它的左侧子节点，最后是右侧子节点
+BinarySearchTree.prototype.preOrderTraverse = function (callback) {
+  preOrderTraverseNode(this.root, callback)
 }
 
 // 后序遍历所有节点

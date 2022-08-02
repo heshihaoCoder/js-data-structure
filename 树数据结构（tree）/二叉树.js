@@ -45,11 +45,21 @@ function print(value) {
   console.log(value)
 }
 
+// 先序遍历辅助函数
 let preOrderTraverseNode = function (node, callback) {
   if (node != null) {
-    callback(node)
+    callback(node.key)
     preOrderTraverseNode(node.left, callback)
     preOrderTraverseNode(node.right, callback)
+  }
+}
+
+// 后序遍历辅助函数
+let postOrderTraverseNode = function (node, callback) {
+  if (node != null) {
+    postOrderTraverseNode(node.left, callback)
+    postOrderTraverseNode(node.left, callback)
+    callback(node.key)
   }
 }
 
@@ -79,9 +89,9 @@ BinarySearchTree.prototype.preOrderTraverse = function (callback) {
   preOrderTraverseNode(this.root, callback)
 }
 
-// 后序遍历所有节点
-BinarySearchTree.prototype.postOrderTraverse = function () {
-
+// 后序遍历所有节点  后序遍历则是先访问节点的后代节点，再访问节点本身
+BinarySearchTree.prototype.postOrderTraverse = function (callback) {
+  postOrderTraverseNode(this.root, callback)
 }
 
 // 返回树中最小的键值

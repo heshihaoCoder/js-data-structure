@@ -4,6 +4,7 @@
 // E：一组边，链接V中的顶点
 
 import Dictionary from '../字典（Dictionary）/index'
+import Queue from '../队列数据结构（queue）/index'
 
 
 function Graph() {
@@ -50,6 +51,25 @@ let initColor = function () {
 }
 
 Graph.prototype.BFS = function (v, callback) {
-  let color = initColor()
+  // 遍历开始我们所有的顶点都是白色
+  let color = initializeColor(); //{2} 
+  let queue = new Queue(); //{3} 
+  queue.enqueue(v); //{4} 
+  while (!queue.isEmpty()) { //{5} 
+    let u = queue.dequeue(); //{6} 
+    let neighbors = this.adjList.get(u); //{7} 
+    color[u] = 'grey'; // {8} 
+    for (let i = 0; i < neighbors.length; i++) { // {9} 
+      let w = neighbors[i]; // {10} 
+      if (color[w] === 'white') { // {11} 
+        color[w] = 'grey'; // {12} 
+        queue.enqueue(w); // {13} 
+      }
+    }
+    color[u] = 'black'; // {14} 
+    if (callback) { // {15} 
+      callback(u);
+    }
+  }
 }
 

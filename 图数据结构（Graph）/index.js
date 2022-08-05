@@ -8,7 +8,9 @@ import Queue from '../队列数据结构（queue）/index'
 
 
 function Graph() {
+  // 保存顶点信息
   this.vertices = []
+  // 存储临接表
   this.adjList = new Dictionary()
 }
 
@@ -18,8 +20,19 @@ Graph.prototype.addVertex = function (v) {
 }
 
 Graph.prototype.addEdge = function (v, k) {
+  // 有方向的话只需要这一句
   this.vertices.get(v).push(k)
+  //没有方向则都需要添加
   this.vertices.get(k).push(v)
+}
+
+let gra = new Graph()
+// 所有的顶点
+var myVertices = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I']
+
+// 将顶点添加到vertices
+for (let i = 0; i < myVertices.length; i++) {
+  gra.addVertex(myVertices[i])
 }
 
 // 图的遍历（两种方法）
@@ -54,12 +67,17 @@ Graph.prototype.BFS = function (v, callback) {
   // 遍历开始我们所有的顶点都是白色
   let color = initializeColor(); //{2} 
   let queue = new Queue(); //{3} 
+  // 先将 一个顶点 进入队列
   queue.enqueue(v); //{4} 
   while (!queue.isEmpty()) { //{5} 
+    //  在拿出A
     let u = queue.dequeue(); //{6} 
+    // 根据A可以拿到 A 对应的保存的队列   比如 A ->  B,C,D
     let neighbors = this.adjList.get(u); //{7} 
     color[u] = 'grey'; // {8} 
+
     for (let i = 0; i < neighbors.length; i++) { // {9} 
+      // 如果是  A ->[B,C,D]   会将BCD依次进入队列   之后  在执行 {6}   直到没有元素
       let w = neighbors[i]; // {10} 
       if (color[w] === 'white') { // {11} 
         color[w] = 'grey'; // {12} 
@@ -72,4 +90,50 @@ Graph.prototype.BFS = function (v, callback) {
     }
   }
 }
+
+
+// 使用BFS寻找最短路径
+
+// 改进版BFS
+Graph.prototype.optimizeBFS = function (v) {
+  let color = initColor();
+  let queue = new Queue();
+  // 距离
+  let d = []; //{1}
+  // 前朔点
+  let prev = [];  //{2}
+  queue.enqueue(v);
+
+  for (let i = 0; i < this.vertices.length; i++) {   //{3}
+    // 初始化距离
+    d[this.vertices[i]] = 0
+    // 初始化前朔点
+    prev[this.vertices[i]] = null
+  }
+
+  while (!queue.isEmpty()) {
+    let u = queue.dequeue();
+    let neighbors = this.adjList.get(u);
+    color[u] = 'grey';
+    for (i = 0; i < neighbors.length; i++) {
+      var w = neighbors[i];
+      if (color[w] === 'white') {
+        color[w] = 'grey';
+        // 这个 d[w]  由  d[u]来的
+        d[w] = d[u] + 1; //{6} 
+        pred[w] = u; //{7} 
+        queue.enqueue(w);
+      }
+    }
+    color[u] = 'black';
+  }
+  return { //{8} 
+    distances: d,
+    predecessors: pred
+  };
+
+}
+
+
+// 深入学习广度优先算法
 

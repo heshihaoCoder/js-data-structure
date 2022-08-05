@@ -70,12 +70,13 @@ Graph.prototype.BFS = function (v, callback) {
   // 先将 一个顶点 进入队列
   queue.enqueue(v); //{4} 
   while (!queue.isEmpty()) { //{5} 
-    //  在拿出A
+    //  在拿出队列
     let u = queue.dequeue(); //{6} 
     // 根据A可以拿到 A 对应的保存的队列   比如 A ->  B,C,D
     let neighbors = this.adjList.get(u); //{7} 
     color[u] = 'grey'; // {8} 
 
+    // 会先将这里的for执行完在去进行while循环
     for (let i = 0; i < neighbors.length; i++) { // {9} 
       // 如果是  A ->[B,C,D]   会将BCD依次进入队列   之后  在执行 {6}   直到没有元素
       let w = neighbors[i]; // {10} 

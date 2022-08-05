@@ -33,7 +33,7 @@ function Dijkstra(src) {
   return dist  //{8}
 }
 var minDistance = function (dist, visited) {
-  var min = INF, minIndex = -1;
+  var min = Number.MAX_VALUE, minIndex = -1;
   for (var v = 0; v < dist.length; v++) {
     if (visited[v] == false && dist[v] <= min) {
       min = dist[v];

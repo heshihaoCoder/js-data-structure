@@ -147,4 +147,31 @@ Graph.prototype.optimizeBFS = function (v) {
 
 Graph.prototype.DFS = function (callback) {
   let color = initColor()
+  for (let i = 0; i < this.vertices.length; i++) { //{2} 
+    if (color[vertices[i]] === 'white') { //{3} 
+      dfsVisit(vertices[i], color, callback); //{4} 
+    }
+  }
+}
+
+// DFS辅助函数
+let dfsVisit = function (u, color, callback) {
+  color[u] = 'grey'; //{5} 
+  if (callback) { //{6} 
+    callback(u);
+  }
+  var neighbors = this.adjList.get(u); //{7} 
+  for (var i = 0; i < neighbors.length; i++) { //{8} 
+    var w = neighbors[i]; //{9} 
+    if (color[w] === 'white') { //{10} 
+      dfsVisit(w, color, callback); //{11} 
+    }
+  }
+  color[u] = 'black'; //{12} 
+};
+
+
+// 改进版的DFS
+Graph.prototype.optimizeDFS = function (callback) {
+
 }

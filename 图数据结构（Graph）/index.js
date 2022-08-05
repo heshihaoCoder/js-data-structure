@@ -172,6 +172,42 @@ let dfsVisit = function (u, color, callback) {
 
 
 // 改进版的DFS
-Graph.prototype.optimizeDFS = function (callback) {
-
+var time = 0
+Graph.prototype.optimizeDFS = function () {
+  let color = initColor();
+  let d = [];
+  let f = [];
+  let p = [];
+  time = 0;
+  for (var i = 0; i < this.vertices.length; i++) {
+    f[this.vertices[i]] = 0
+    d[this.vertices[i]] = 0;
+    p[this.vertices[i]] = null
+  }
+  for (i = 0; i < this.vertices.length; i++) {
+    if (color[this.vertices[i]] === 'white') {
+      DFSVisit2(this.vertices[i], color, d, f, p)
+    }
+  }
+  return {
+    discovery: d,
+    finished: f,
+    predecessors: p
+  }
 }
+var DFSVisit2 = function (u, color, d, f, p) {
+  console.log('discovered ' + u);
+  color[u] = 'grey';
+  d[u] = ++time; //{5} 
+  var neighbors = this.adjList.get(u);
+  for (var i = 0; i < neighbors.length; i++) {
+    var w = neighbors[i];
+    if (color[w] === 'white') {
+      p[w] = u; // {6} 
+      DFSVisit2(w, color, d, f, p);
+    }
+  }
+  color[u] = 'black';
+  f[u] = ++time; //{7} 
+  console.log('explored ' + u);
+};

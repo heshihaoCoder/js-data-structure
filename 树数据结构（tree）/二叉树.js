@@ -32,7 +32,7 @@ let insertNode = function (node, newNode) {
   }
 }
 
-// inOrderTraverseNode辅助函数
+//中序遍历 inOrderTraverseNode辅助函数
 let inOrderTraverseNode = function (node, callback) {
   if (node != null) {
     inOrderTraverseNode(node.left, callback)

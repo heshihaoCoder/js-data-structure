@@ -16,7 +16,7 @@ function Dijkstra(src) {
   let length = graph.length
 
   for (let i = 0; i < length; i++) {  //{1}
-    dist[i] = Number.MAX_VALUE
+    dist[i] = Infinity
     visited[i] = false
   }
   dist[src] = 0;   //{2}
@@ -25,7 +25,7 @@ function Dijkstra(src) {
     visited[u] = true  //{5}
 
     for (let v = 0; v < length; v++) {
-      if (!visited[v] && graph[u][v] != 0 && dist[u] != Number.MAX_VALUE && dist[u] + graph[u][v] < dist[v]) {  //{6}
+      if (!visited[v] && graph[u][v] != 0 && dist[u] != Infinity && dist[u] + graph[u][v] < dist[v]) {  //{6}
         dist[v] = dist[u] + graph[u][v]  //{7}
       }
     }
@@ -33,7 +33,7 @@ function Dijkstra(src) {
   return dist  //{8}
 }
 var minDistance = function (dist, visited) {
-  var min = Number.MAX_VALUE, minIndex = -1;
+  var min = Infinity, minIndex = -1;
   for (var v = 0; v < dist.length; v++) {
     if (visited[v] == false && dist[v] <= min) {
       min = dist[v];

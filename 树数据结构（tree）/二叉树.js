@@ -15,6 +15,13 @@ function BinarySearchTree() {
 }
 
 
+
+
+// inOrderTraverseNode辅助函数需要的callback
+function print(value) {
+  console.log(value)
+}
+
 // insertNode辅助函数
 let insertNode = function (node, newNode) {
   if (newNode.key < node.key) {
@@ -31,58 +38,14 @@ let insertNode = function (node, newNode) {
     }
   }
 }
-
-//中序遍历 inOrderTraverseNode辅助函数
-let inOrderTraverseNode = function (node, callback) {
-  if (node != null) {
-    inOrderTraverseNode(node.left, callback)
-    callback(node.key)
-    inOrderTraverseNode(node.right, callback)
+// 插入一个键
+BinarySearchTree.prototype.insert = function (key) {
+  let node = new Node(key)
+  if (!this.root) {
+    this.root = node
+  } else {
+    insertNode(this.root, node)
   }
-}
-// inOrderTraverseNode辅助函数需要的callback
-function print(value) {
-  console.log(value)
-}
-
-// 先序遍历辅助函数
-let preOrderTraverseNode = function (node, callback) {
-  if (node != null) {
-    callback(node.key)
-    preOrderTraverseNode(node.left, callback)
-    preOrderTraverseNode(node.right, callback)
-  }
-}
-
-// 后序遍历辅助函数
-let postOrderTraverseNode = function (node, callback) {
-  if (node != null) {
-    postOrderTraverseNode(node.left, callback)
-    postOrderTraverseNode(node.right, callback)
-    callback(node.key)
-  }
-}
-
-// 最小的键值辅助函数
-let minNode = function (node) {
-  if (node) {
-    while (node != null && node.left != null) {
-      minNode(node.left)
-    }
-    return node.key
-  }
-  return null
-}
-
-// 最大的键值辅助函数
-let maxNode = function (node) {
-  if (node) {
-    while (node != null && node.right != null) {
-      minNode(node.right)
-    }
-    return node.key
-  }
-  return null
 }
 
 // search辅助函数
@@ -97,6 +60,86 @@ let searchNode = function (node, key) {
   } else {
     return true
   }
+}
+
+// 查找一个键
+BinarySearchTree.prototype.search = function (key) {
+  return searchNode(this.root, key)
+}
+
+
+//中序遍历 inOrderTraverseNode辅助函数
+let inOrderTraverseNode = function (node, callback) {
+  if (node != null) {
+    inOrderTraverseNode(node.left, callback)
+    callback(node.key)
+    inOrderTraverseNode(node.right, callback)
+  }
+}
+
+// 中序遍历所有节点 也就是以从最小到最大的顺序访问所有节点     34567
+BinarySearchTree.prototype.inOrderTraverse = function (callback) {
+  inOrderTraverseNode(this.root, callback)
+}
+
+// 先序遍历辅助函数
+let preOrderTraverseNode = function (node, callback) {
+  if (node != null) {
+    callback(node.key)
+    preOrderTraverseNode(node.left, callback)
+    preOrderTraverseNode(node.right, callback)
+  }
+}
+
+// 先序遍历所有节点   先序遍历会先访问节点本身，然后再访问它的左侧子节点，最后是右侧子节点  54367
+BinarySearchTree.prototype.preOrderTraverse = function (callback) {
+  preOrderTraverseNode(this.root, callback)
+}
+
+// 后序遍历辅助函数
+let postOrderTraverseNode = function (node, callback) {
+  if (node != null) {
+    postOrderTraverseNode(node.left, callback)
+    postOrderTraverseNode(node.right, callback)
+    callback(node.key)
+  }
+}
+
+// 后序遍历所有节点  后序遍历则是先访问节点的后代节点，再访问节点本身   34765
+BinarySearchTree.prototype.postOrderTraverse = function (callback) {
+  postOrderTraverseNode(this.root, callback)
+}
+
+// 最小的键值辅助函数
+let minNode = function (node) {
+  if (node) {
+    while (node != null && node.left != null) {
+      minNode(node.left)
+    }
+    return node.key
+  }
+  return null
+}
+
+// 返回树中最小的键值
+BinarySearchTree.prototype.min = function () {
+  return minNode(this.root)
+}
+
+// 最大的键值辅助函数
+let maxNode = function (node) {
+  if (node) {
+    while (node != null && node.right != null) {
+      minNode(node.right)
+    }
+    return node.key
+  }
+  return null
+}
+
+// 返回树中最大的键值
+BinarySearchTree.prototype.max = function () {
+  return maxNode(this.root)
 }
 
 // remove辅助函数
@@ -138,48 +181,6 @@ let findMinNode = function (node) {
   }
   return node;
 };
-
-
-
-// 插入一个键
-BinarySearchTree.prototype.insert = function (key) {
-  let node = new Node(key)
-  if (!this.root) {
-    this.root = node
-  } else {
-    insertNode(this.root, node)
-  }
-}
-
-// 查找一个键
-BinarySearchTree.prototype.search = function (key) {
-  return searchNode(this.root, key)
-}
-
-// 中序遍历所有节点 也就是以从最小到最大的顺序访问所有节点     34567
-BinarySearchTree.prototype.inOrderTraverse = function (callback) {
-  inOrderTraverseNode(this.root, callback)
-}
-
-// 先序遍历所有节点   先序遍历会先访问节点本身，然后再访问它的左侧子节点，最后是右侧子节点  54367
-BinarySearchTree.prototype.preOrderTraverse = function (callback) {
-  preOrderTraverseNode(this.root, callback)
-}
-
-// 后序遍历所有节点  后序遍历则是先访问节点的后代节点，再访问节点本身   34765
-BinarySearchTree.prototype.postOrderTraverse = function (callback) {
-  postOrderTraverseNode(this.root, callback)
-}
-
-// 返回树中最小的键值
-BinarySearchTree.prototype.min = function () {
-  return minNode(this.root)
-}
-
-// 返回树中最大的键值
-BinarySearchTree.prototype.max = function () {
-  return maxNode(this.root)
-}
 
 // 从树中移除某个键
 BinarySearchTree.prototype.remove = function (key) {

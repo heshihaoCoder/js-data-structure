@@ -26,13 +26,17 @@ function MinCoinChange(coins) {
       return cache[amount];
     }
     let min = [], newMin, newAmount;
-    for (var i = 0; i < coins.length; i++) { //{5} 
+    for (let i = 0; i < coins.length; i++) { //{5} 
       let coin = coins[i];
       newAmount = amount - coin; //{6} 
+      console.log(amount, 'amount')
+      console.log(coin, 'coin')
+      console.log(newAmount, '888')
       if (newAmount >= 0) {
-        console.log('xixix')
+        console.log(newAmount, '进入')
         newMin = me.makeChange(newAmount); //{7} 
       }
+      console.log(newAmount, '999')
       if (
         newAmount >= 0 && //{8} 
         (newMin.length < min.length - 1 || !min.length)//{9} 
@@ -40,6 +44,7 @@ function MinCoinChange(coins) {
         min = [coin].concat(newMin); //{11} 
       }
     }
+    console.log(min)
     return (cache[amount] = min); //{12} 
   };
 }

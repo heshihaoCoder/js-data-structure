@@ -70,10 +70,10 @@ Graph.prototype.BFS = function (v, callback) {
   // 先将 一个顶点 进入队列
   queue.enqueue(v); //{4} 
   while (!queue.isEmpty()) { //{5} 
-    //  在拿出队列
+    //  从队列取出一个元素
     let u = queue.dequeue(); //{6} 
     // 根据A可以拿到 A 对应的保存的队列   比如 A ->  B,C,D
-    let neighbors = this.adjList.get(u); //{7} 
+    let neighbors = this.adjList.get(u);   //{7}   拿到数组元素
     color[u] = 'grey'; // {8} 
 
     // 会先将这里的for执行完在去进行while循环

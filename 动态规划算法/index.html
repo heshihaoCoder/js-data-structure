@@ -117,6 +117,10 @@
     console.log(f.colors)
     console.log(p.colors)
 
+    let pp = Object.create(f, { name: { value: 555 } })
+    console.log(pp.__proto__ == f)
+    console.log(pp.name)
+
 
     // let f = new foo('heshihao', 19)
     // console.log(f)

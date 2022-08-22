@@ -84,6 +84,110 @@
     //   console.log(res)
     // })
 
+    // let obj = {
+    //   // 对象在有运算符的时候，会首先调用valueOf  没有valueOf再去调用tostring
+    //   a: 1,
+    // }
+
+    // let nums = [1, 2, 3]
+
+    // if (1 == 1) {
+    //   console.log(nums.toString())   //跟join一样
+    //   console.log(nums.valueOf())  //返回本身
+    //   console.log(obj.toString())   //[object Object]
+    //   console.log(obj.valueOf())  //返回本身
+    //   console.log(Object.prototype.toString.call(nums))//[object Array]
+    // }
+
+
+    function foo(name, age) {
+      this.name = name
+      this.age = age
+
+      // return {
+      //   name: 99
+      // }
+    }
+    foo.prototype.colors = [1, 2, 3]
+
+    let f = new foo('heshihao', 18)
+    let p = new foo('hh', 18)
+
+    f.colors.pop()
+    console.log(f.colors)
+    console.log(p.colors)
+
+
+    // let f = new foo('heshihao', 19)
+    // console.log(f)
+
+
+    // 手写new
+    function _new(fn, ...arg) {
+      let obj = {}
+      obj.__proto__ = fn.prototype;
+      let res = fn.apply(obj, arg)
+      if ((res != null) && (typeof res == 'function' || typeof res == 'object')) {
+        return res
+      }
+      return obj
+    }
+
+    function _new() {
+      let Constructor = [].shift.call(arguments)
+      console.log(Constructor, '构造器')
+      let obj = {}
+      Object.setPrototypeOf(obj, Constructor.prototype)
+      let res = Constructor.apply(obj, arguments)
+      console.log(arguments, '实参')
+      return res instanceof Object ? res : obj
+    }
+    // let f1 = _new(foo, 'heshiihao', 19)
+    // f1.say()
+
+    // // console.log(f1.say())
+    // // console.log(f1.__proto__ == foo.prototype)
+
+    // function foo2() {
+
+    // }
+    // foo2.prototype.hello = function () {
+    //   console.log('hello')
+    // }
+
+    // Object.setPrototypeOf(f1, foo2.prototype)
+    // f1.hello()
+
+
+
+
+    // let s = new String('heshihao')
+    // function bar() {
+
+    // }
+    // let b = new bar()
+    // // 一下输出结果都是true
+    // console.log(bar.__proto__.__proto__ == bar.prototype.__proto__)
+    // console.log(bar.prototype.__proto__ == Object.prototype)
+    // console.log(b.__proto__ == bar.prototype)
+    // console.log(b.__proto__.__proto__ == Object.prototype)
+    // console.log(String.__proto__ == Function.prototype)
+    // console.log(s.__proto__ == String.prototype)
+
+    // let obj = {
+    //   cc: 1
+    // }
+    // let o = {
+
+    // }
+    // Object.setPrototypeOf(o, obj)    //将obj设置为o的__proto__
+
+    // console.log(o.__proto__ == obj)
+
+    // console.log(obj)
+
+
+
 
   </script>
 

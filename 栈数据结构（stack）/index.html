@@ -2,37 +2,19 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>栈数据结构（stack）</title>
 </head>
 
 <body>
-  <script src="./index.js"></script>
+  <!-- <script src="./index.js"></script> -->
   <script>
+    let a = 66;
+    const b = 55;
+    var d = 77;
 
-    let obj = {
-      names: 'obj',
-      age: 18
-    }
-
-    Object.keys(obj).forEach(key => {
-      let val = obj[key]
-      Object.defineProperty(obj, key, {
-        get() {
-          console.log('获取属性', key)
-          return val
-        },
-        set(newv) {
-          val = newv
-        }
-      })
-    })
-
-
-    let { age, names } = obj
-    console.log(age, names)
   </script>
   <!-- <script>
     // console.log(Math.floor(5 % 2))
